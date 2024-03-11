@@ -45,6 +45,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     )
     is_active = models.BooleanField(_("Is Active"), default=True)
     is_staff = models.BooleanField(_("Is Staff"), default=False)
+    is_agent = models.BooleanField(_("Is Agent"), default=False)
     date_joined = models.DateTimeField(_("Date Joined"), default=timezone.now)
 
     objects = CustomUserManager()

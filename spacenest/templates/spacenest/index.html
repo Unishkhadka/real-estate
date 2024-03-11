@@ -1,68 +1,54 @@
 {% extends "main.html" %} {% block content %} {% load static %}
-<section
-  class="relative bg-[{% static 'house.jpg' %}] bg-cover bg-center bg-no-repeat"
->
+<section>
   <div
-    class="absolute inset-0 bg-white/75 sm:bg-transparent sm:from-white/95 sm:to-white/25 ltr:sm:bg-gradient-to-r rtl:sm:bg-gradient-to-l"
-  ></div>
-
-  <div
-    class="flex items-center justify-center mx-auto max-w-screen-xl px-4 py-36 sm:px-6 lg:flex lg:items-center lg:px-8"
+    class="flex items-center justify-center z-50 mx-auto max-w-screen-xl px-4 py-36 sm:px-6 lg:flex lg:items-center lg:px-8"
   >
     <div class="text-center ltr:sm:text-left rtl:sm:text-right">
       <h1 class="text-3xl font-extrabold sm:text-5xl">
         Let us find your
 
-        <strong class="block font-extrabold text-rose-700">
+        <strong class="block font-extrabold text-rose-600">
           Forever Home.
         </strong>
       </h1>
 
-      <p class="mt-4 max-w-2xl sm:text-xl/relaxed">
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nesciunt illo
-        tenetur fuga ducimus numquam ea!
+      <p class="mt-4 max-w-2xl sm:text-xl/relaxed text-gray-600">
+        Uncover the Ideal Sanctuary to Call Your Own - Where Every Space Becomes
+        a Canvas for Your Dreams to Blossom into Reality.
       </p>
 
       <div class="mt-8 flex items-center justify-center gap-4 text-center">
-        <!--
-  Heads up! 👋
+        <div class="relative">
+          <label for="Search" class="sr-only"> Search </label>
 
-  Plugins:
-    - @tailwindcss/forms
--->
+          <input
+            type="text"
+            id="Search"
+            placeholder="Search by location"
+            class="w-[400px] rounded-lg px-4 py-3 shadow-sm sm:text-sm ring-2"
+          />
 
-<div class="relative">
-  <label for="Search" class="sr-only"> Search </label>
+          <span class="absolute inset-y-0 end-0 grid w-10 place-content-center">
+            <button type="button" class="text-gray-600 hover:text-gray-700">
+              <span class="sr-only">Search</span>
 
-  <input
-    type="text"
-    id="Search"
-    placeholder="Search by location"
-    class="w-[400px] rounded-lg px-4 py-3 shadow-sm sm:text-sm ring-2"
-  />
-
-  <span class="absolute inset-y-0 end-0 grid w-10 place-content-center">
-    <button type="button" class="text-gray-600 hover:text-gray-700">
-      <span class="sr-only">Search</span>
-
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke-width="1.5"
-        stroke="currentColor"
-        class="h-4 w-4"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-        />
-      </svg>
-    </button>
-  </span>
-</div>
-
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="h-4 w-4"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                />
+              </svg>
+            </button>
+          </span>
+        </div>
       </div>
     </div>
   </div>
@@ -75,9 +61,7 @@
       </h2>
 
       <p class="mt-4 text-gray-500 sm:text-xl">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione dolores
-        laborum labore provident impedit esse recusandae facere libero harum
-        sequi.
+        Discover Your Ideal Space, Guiding You Through Every Step of Your Journey with Confidence, Ease, and Expertise.
       </p>
     </div>
 
@@ -123,7 +107,7 @@
     <a href="#" class="block rounded-lg p-4 shadow-lg shadow-indigo-100">
       <img
         alt=""
-        src="https://images.unsplash.com/photo-1613545325278-f24b0cae1224?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
+        src="{% static 'room-1.jpg' %}"
         class="h-56 w-full rounded-md object-cover"
       />
 
@@ -132,13 +116,13 @@
           <div>
             <dt class="sr-only">Price</dt>
 
-            <dd class="text-sm text-gray-500">$240,000</dd>
+            <dd class="text-sm text-gray-500">$290,000</dd>
           </div>
 
           <div>
             <dt class="sr-only">Address</dt>
 
-            <dd class="font-medium">123 Wallaby Avenue, Park Road</dd>
+            <dd class="font-medium">Tranquil Pines Drive, Forest Heights</dd>
           </div>
         </dl>
 
@@ -215,24 +199,21 @@
       </div>
     </a>
     <a href="#" class="block rounded-lg p-4 shadow-lg shadow-indigo-100">
-      <img
-        alt=""
-        src="https://images.unsplash.com/photo-1613545325278-f24b0cae1224?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
-        class="h-56 w-full rounded-md object-cover"
-      />
+      <img alt="" src="{% static "room-2.jpg" %}" class="h-56 w-full rounded-md
+      object-cover" />
 
       <div class="mt-2">
         <dl>
           <div>
             <dt class="sr-only">Price</dt>
 
-            <dd class="text-sm text-gray-500">$240,000</dd>
+            <dd class="text-sm text-gray-500">$175,000</dd>
           </div>
 
           <div>
             <dt class="sr-only">Address</dt>
 
-            <dd class="font-medium">123 Wallaby Avenue, Park Road</dd>
+            <dd class="font-medium">Lakeside Haven Way, Willow Creek</dd>
           </div>
         </dl>
 
@@ -406,7 +387,9 @@
 </section>
 <section class="my-32">
   <div class="text-center">
-    <h1 class="text-4xl text-gray-900 font-bold">Our Plan For Your Strategies</h1>
+    <h1 class="text-4xl text-gray-900 font-bold">
+      Our Plan For Your Strategies
+    </h1>
   </div>
   <div class="mx-auto max-w-3xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:items-center md:gap-8">
@@ -423,8 +406,6 @@
             <strong class="text-3xl font-bold text-gray-900 sm:text-4xl">
               30$
             </strong>
-
-            <span class="text-sm font-medium text-gray-700">/month</span>
           </p>
         </div>
 
@@ -445,26 +426,7 @@
               />
             </svg>
 
-            <span class="text-gray-700"> 20 users included </span>
-          </li>
-
-          <li class="flex items-center gap-1">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="size-5 text-rose-700"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M4.5 12.75l6 6 9-13.5"
-              />
-            </svg>
-
-            <span class="text-gray-700"> 5GB of storage </span>
+            <span class="text-gray-700"> 20 listings/ month</span>
           </li>
 
           <li class="flex items-center gap-1">
@@ -566,7 +528,6 @@
               20$
             </strong>
 
-            <span class="text-sm font-medium text-gray-700">/month</span>
           </p>
         </div>
 
@@ -587,26 +548,7 @@
               />
             </svg>
 
-            <span class="text-gray-700"> 10 users included </span>
-          </li>
-
-          <li class="flex items-center gap-1">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="size-5 text-rose-700"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M4.5 12.75l6 6 9-13.5"
-              />
-            </svg>
-
-            <span class="text-gray-700"> 2GB of storage </span>
+            <span class="text-gray-700"> 10 listings/ month</span>
           </li>
 
           <li class="flex items-center gap-1">
