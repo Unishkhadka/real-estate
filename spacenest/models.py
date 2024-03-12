@@ -4,26 +4,40 @@ import shortuuid
 from users.models import CustomUser as User
 
 
-from django.db import models
-from django.utils.translation import gettext_lazy as _
-import shortuuid
-from users.models import CustomUser as User
-
 class Property(models.Model):
+    PROVINCE_CHOICES = [
+        ("koshi", _("Koshi Province")),
+        ("madhesh", _("Madhesh Province")),
+        ("bagmati", _("Bagmati Province")),
+        ("gandaki", _("Gandaki Province")),
+        ("lumbini", _("Lumbini Province")),
+        ("karnali", _("Karnali Province")),
+        ("sudurpashchim", _("Sudurpashchim Province")),
+    ]
+
+    LISTING_TYPE_CHOICES = [
+        ("sell", _("Sell")),
+        ("rent", _("Rent")),
+    ]
+
     id = models.CharField(
         _("ID"), primary_key=True, max_length=22, default=shortuuid.uuid, editable=False
     )
     name = models.CharField(_("Property Name"), max_length=200)
     location = models.CharField(_("Location"), max_length=200)
-    province = models.CharField(_("Province"), max_length=200)
-    listing_type = models.CharField(_("Listing Type"), max_length=20)
+    province = models.CharField(_("Province"), max_length=200, choices=PROVINCE_CHOICES)
+    listing_type = models.CharField(
+        _("Listing Type"), max_length=20, choices=LISTING_TYPE_CHOICES
+    )
     description = models.TextField(_("Description"))
     price = models.PositiveIntegerField(_("Price"))
-    property_image = models.ImageField(_("Property Image"),
+    property_image = models.ImageField(
+        _("Property Image"),
         upload_to="property/",
         default="property/default.jpg",
         null=True,
-        blank=True,)
+        blank=True,
+    )
     owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_("Owner"))
     parking = models.PositiveIntegerField(_("Parking Space"), default=0)
     bathroom = models.PositiveIntegerField(_("Bathroom"), default=0)
@@ -34,6 +48,7 @@ class Property(models.Model):
 
     def __str__(self) -> str:
         return self.name
+
 
 class Favourite(models.Model):
     id = models.CharField(
