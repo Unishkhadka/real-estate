@@ -2,6 +2,12 @@ from django.shortcuts import render, redirect
 from django.db.models import Q
 from .models import *
 from django.contrib.auth.decorators import login_required
+from django.db import IntegrityError
+import requests
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 def index(request):
@@ -60,7 +66,55 @@ def property(request):
 
 @login_required(login_url="login")
 def pricing(request):
+    KHALTI_SECRET_KEY = os.getenv("KHALTI_SECRET_KEY")
+    URL = "https://a.khalti.com/api/v2/epayment/initiate/"
+    if request.method == "POST":
+        plan = request.POST["plan"]
+        new_membership = Membership.objects.get(name=plan)
+        user_membership = UserMembership.objects.create(
+            user=request.user, membership=new_membership
+        )
+        payload = {
+            "return_url": "http://localhost:8000/payment-success/",
+            "website_url": "http://localhost:8000",
+            "amount": int(new_membership.price * 100),
+            "purchase_order_id": user_membership.id,
+            "purchase_order_name": user_membership.user.full_name,
+        }
+        headers = {"Authorization": f"Key {KHALTI_SECRET_KEY}"}
+        try:
+            response = requests.post(URL, data=payload, headers=headers)
+            response.raise_for_status()
+            data = response.json()
+            return redirect(data["payment_url"])
+        except requests.RequestException as e:
+            print(f"Request to Khalti API failed: {e}")
     return render(request, "spacenest/pricing.html")
+
+
+@login_required(login_url="login")
+def payment_success(request):
+    context = {}
+    if request.method == "GET":
+        try:
+            status = request.GET.get("status")
+            purchase_order_id = request.GET.get("purchase_order_id")
+            if status.lower() == "completed":
+                mem = UserMembership.objects.get(id=purchase_order_id)
+                mem.payment_status = "completed"
+                mem.save()
+                Payment.objects.create(
+                    pidx=request.GET.get("pidx"),
+                    user_membership=mem,
+                    txn_id=request.GET.get("transaction_id"),
+                    amount=request.GET.get("total_amount"),
+                )
+                request.user.is_agent = True
+                context['success'] = True
+        except IntegrityError:
+            pass
+        
+    return render(request, "spacenest/payment_success.html", context)
 
 
 def agents(request):
