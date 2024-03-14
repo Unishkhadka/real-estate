@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 import shortuuid
 from users.models import CustomUser as User
-
+from django_ckeditor_5.fields import CKEditor5Field
 
 class Property(models.Model):
     PROVINCE_CHOICES = [
@@ -29,7 +29,7 @@ class Property(models.Model):
     listing_type = models.CharField(
         _("Listing Type"), max_length=20, choices=LISTING_TYPE_CHOICES
     )
-    description = models.TextField(_("Description"))
+    description = CKEditor5Field('Text', config_name='extends')
     price = models.PositiveIntegerField(_("Price"))
     property_image = models.ImageField(
         _("Property Image"),

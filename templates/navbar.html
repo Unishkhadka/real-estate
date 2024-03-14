@@ -1,13 +1,13 @@
 <nav class="container mx-auto flex items-center justify-between py-5">
-  <div class="text-3xl font-bold cursor-pointer">Urban<span class="text-rose-700 ">Nest</span></div>
+  <div class="text-3xl font-bold cursor-pointer"><a href="{% url 'index' %}">Urban<span class="text-rose-700 ">Nest</span></a></div>
   <div>
     <ul class="flex items-center text-lg gap-10">
       <li>
         <a href="{% url 'index' %}" class="cursor-pointer">Home</a>
       </li>
-      <li class="cursor-pointer">Features</li>
       <li><a href="{% url 'property' %}" class="cursor-pointer">Properties</a></li>
-      <li class="cursor-pointer">Agents</li>
+      <li><a href="{% url 'agents' %}" class="cursor-pointer">Agents</a></li>
+      <li><a href="{% url 'contact' %}" class="cursor-pointer">Contact Us</a></li>
     </ul>
   </div>
   <div class="flex items-center gap-10">
@@ -28,7 +28,7 @@
         <div class="p-2">
           {% if request.user.is_agent %}
           <a
-          href="#"
+          href="{% url "add-property" %}"
           class="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
           role="menuitem"
           >
@@ -36,7 +36,7 @@
         </a>    
         {% else %}
         <a
-          href="#"
+          href="{% url "pricing" %}"
           class="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
           role="menuitem"
           >
@@ -44,14 +44,14 @@
         </a>  
         {% endif %}
           <a
-            href="#"
+            href="{% url "edit-profile" %}"
             class="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
             role="menuitem"
           >
            Edit Profile
           </a>
           <a
-            href="#"
+            href="{% url "favourites" %}"
             class="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
             role="menuitem"
           >

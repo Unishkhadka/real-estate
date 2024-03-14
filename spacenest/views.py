@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.db.models import Q
 from .models import *
+from django.contrib.auth.decorators import login_required
 
 
 def index(request):
@@ -12,10 +13,10 @@ def index(request):
     #     "property_image",
     #     "parking",
     #     "bathroom",
-    #     "bedroom",
+    #     "bedroom"
     # )[:3]
     properties = Property.objects.all()[:3]
-    context = {'properties':properties}
+    context = {"properties": properties}
     return render(request, "spacenest/index.html", context)
 
 
@@ -55,3 +56,56 @@ def property(request):
 
     context = {"properties": properties}
     return render(request, "spacenest/properties.html", context)
+
+
+@login_required(login_url="login")
+def pricing(request):
+    return render(request, "spacenest/pricing.html")
+
+
+def agents(request):
+    agent_list = User.objects.filter(is_agent=True)
+    context = {"agents": agent_list}
+    return render(request, "spacenest/agents.html", context)
+
+
+@login_required(login_url="login")
+def add_property(request):
+    if request.method == "POST":
+        name = request.POST["name"]
+        location = request.POST["location"]
+        province = request.POST["province"]
+        listing_type = request.POST["listing_type"]
+        price = request.POST["price"]
+        image = request.FILES["image"]
+        description = request.POST["description"]
+        parking = request.POST["parking"]
+        bathroom = request.POST["bathroom"]
+        bedroom = request.POST["bedroom"]
+        Property.objects.create(
+            name=name,
+            location=location,
+            province=province,
+            listing_type=listing_type,
+            description=description,
+            price=price,
+            property_image=image,
+            parking=parking,
+            owner=request.user,
+            bathroom=bathroom,
+            bedroom=bedroom,
+        )
+        return redirect("property")
+    return render(request, "spacenest/add_property.html")
+
+
+def edit_profile(request):
+    return render(request, "spacenest/edit_profile.html")
+
+
+def favourites(request):
+    return render(request, "spacenest/favourites.html")
+
+
+def contact(request):
+    return render(request, "spacenest/contact.html")

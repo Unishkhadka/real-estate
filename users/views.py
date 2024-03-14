@@ -42,7 +42,7 @@ def user_register(request):
     return render(request, "users/register.html")
 
 
-@login_required(login_url="spacenest/index.html")
+@login_required(login_url="login")
 def user_logout(request):
     logout(request)
     return redirect("index")
