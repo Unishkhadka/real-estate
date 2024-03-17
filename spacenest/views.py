@@ -29,7 +29,7 @@ def index(request):
     return render(request, "spacenest/index.html", context)
 
 
-def property(request):
+def property_list(request):
     properties = Property.objects.values_list(
         "id",
         "name",
@@ -65,6 +65,12 @@ def property(request):
 
     context = {"properties": properties}
     return render(request, "spacenest/properties.html", context)
+
+
+def property(request, pk):
+    property = Property.objects.get(id=pk)
+    context = {"property": property}
+    return render(request, "spacenest/property.html")
 
 
 @login_required(login_url="login")
@@ -176,6 +182,13 @@ def agents(request):
     agent_list = User.objects.filter(is_agent=True)
     context = {"agents": agent_list}
     return render(request, "spacenest/agents.html", context)
+
+
+def agent(request, pk):
+    agent = User.objects.get(id=pk)
+    properties = Property.objects.filter(owner=agent)
+    context = {"agent": agent, "properties": properties}
+    return render(request, "spacenest/agent.html", context)
 
 
 def edit_profile(request):

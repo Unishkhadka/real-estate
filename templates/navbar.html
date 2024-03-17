@@ -5,7 +5,7 @@
       <li>
         <a href="{% url 'index' %}" class="cursor-pointer">Home</a>
       </li>
-      <li><a href="{% url 'property' %}" class="cursor-pointer">Properties</a></li>
+      <li><a href="{% url 'properties' %}" class="cursor-pointer">Properties</a></li>
       <li><a href="{% url 'agents' %}" class="cursor-pointer">Agents</a></li>
       <li><a href="{% url 'contact' %}" class="cursor-pointer">Contact Us</a></li>
     </ul>
@@ -18,7 +18,7 @@
           class="px-4 py-2 text-sm/none text-gray-600 hover:bg-gray-50 hover:text-gray-700 cursor-pointer"
         >
           {{request.user.full_name}}
-        </>
+    </p>
     
       <div
       id="dropdown-items"

@@ -69,8 +69,9 @@
 
     <div class="block rounded-lg p-4 shadow-lg shadow-indigo-100 overflow-hidden relative">
       <span class="px-3 absolute mt-5 text-white rounded-r-full py-1 {% if property.listing_type == 'sell' %}bg-red-500{% else %}bg-green-500{% endif %} capitalize">{{property.listing_type}}</span>
+      <a href="{% url "property" property.id %}">
       <img alt="" src="{{property.property_image.url}}" class="h-56 w-full rounded-md object-cover" />
-
+      </a>
       <div class="mt-2">
         <dl>
           <div class="flex items-center justify-between">
@@ -84,8 +85,9 @@
 
           <div>
             <dt class="sr-only">Address</dt>
-
+            <a href="{% url "property" property.id %}">
             <dd class="font-medium">{{property.name}}</dd>
+            </a>
           </div>
         </dl>
 
