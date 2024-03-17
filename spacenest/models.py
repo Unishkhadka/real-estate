@@ -1,6 +1,8 @@
+from typing import Iterable
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 import shortuuid
+from datetime import timedelta
 from django.utils import timezone
 from users.models import CustomUser as User
 from django_ckeditor_5.fields import CKEditor5Field
@@ -52,14 +54,6 @@ class Property(models.Model):
         return self.name
 
 
-class Favourite(models.Model):
-    id = models.CharField(
-        _("ID"), primary_key=True, max_length=22, default=shortuuid.uuid, editable=False
-    )
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    property = models.ForeignKey(Property, on_delete=models.CASCADE)
-
-
 class Membership(models.Model):
     id = models.CharField(
         _("ID"), primary_key=True, max_length=22, default=shortuuid.uuid, editable=False
@@ -70,7 +64,6 @@ class Membership(models.Model):
 
     def __str__(self):
         return self.name
-        
 
 
 class UserMembership(models.Model):
@@ -91,15 +84,21 @@ class UserMembership(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     membership = models.ForeignKey(Membership, on_delete=models.CASCADE)
     date = models.DateTimeField(default=timezone.now)
+    expiry = models.DateTimeField(null=True, blank=True)
     payment_status = models.CharField(
         max_length=20, choices=PAYMENT_STATUS_CHOICES, default=INITIATED
     )
+
+    def save(self, *args, **kwargs):
+        self.expiry = self.date + timedelta(days=30)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.user.full_name}'s {self.membership.name} Membership"
 
     class Meta:
         unique_together = ("user", "membership")
+
 
 class Payment(models.Model):
     id = models.CharField(
@@ -112,3 +111,34 @@ class Payment(models.Model):
 
     def __str__(self):
         return f"Payment for {self.user_membership.user.full_name}"
+
+
+class Favourite(models.Model):
+    id = models.CharField(
+        _("ID"), primary_key=True, max_length=22, default=shortuuid.uuid, editable=False
+    )
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    property = models.ForeignKey(Property, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Favourited {self.property.name} by {self.user.full_name}"
+
+
+class Mailbox(models.Model):
+    id = models.CharField(
+        _("ID"), primary_key=True, max_length=22, default=shortuuid.uuid, editable=False
+    )
+    sender = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="sent_messages"
+    )
+    receiver = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="received_messages"
+    )
+    title = models.CharField(_("Title"), max_length=150, null=True, blank=True)
+    content = models.TextField(_("Content"), null=True, blank=True)
+
+    class Meta:
+        verbose_name_plural = "Mailbox"
+
+    def __str__(self):
+        return f"Sent by {self.sender.full_name} to {self.receiver.full_name}"

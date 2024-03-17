@@ -1,11 +1,14 @@
 from django.shortcuts import render, redirect
 from django.db.models import Q
 from .models import *
+from datetime import timedelta
+from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 import requests
 import os
 from dotenv import load_dotenv
+from django.http import HttpResponse
 
 load_dotenv()
 
@@ -65,7 +68,58 @@ def property(request):
 
 
 @login_required(login_url="login")
+def add_property(request):
+    agent = request.user
+    user_membership = UserMembership.objects.select_related("user", "membership").get(
+        user=agent
+    )
+    current_date = timezone.now()
+    if current_date > user_membership.expiry:
+        agent.is_agent = False
+        agent.save()
+        user_membership.delete()
+        return redirect("pricing")
+    else:
+        allowed_listing = user_membership.membership.listing_count
+        user_listed = (
+            Property.objects.filter(owner=agent).select_related("owner").count()
+        )
+        print(allowed_listing, user_listed)
+        if user_listed > allowed_listing:
+            return HttpResponse("Count Exceeded")
+
+    if request.method == "POST":
+        name = request.POST["name"]
+        location = request.POST["location"]
+        province = request.POST["province"]
+        listing_type = request.POST["listing_type"]
+        price = request.POST["price"]
+        image = request.FILES["image"]
+        description = request.POST["description"]
+        parking = request.POST["parking"]
+        bathroom = request.POST["bathroom"]
+        bedroom = request.POST["bedroom"]
+        Property.objects.create(
+            name=name,
+            location=location,
+            province=province,
+            listing_type=listing_type,
+            description=description,
+            price=price,
+            property_image=image,
+            parking=parking,
+            owner=request.user,
+            bathroom=bathroom,
+            bedroom=bedroom,
+        )
+        return redirect("property")
+    return render(request, "spacenest/add_property.html")
+
+
+@login_required(login_url="login")
 def pricing(request):
+    if request.user.is_agent:
+        return redirect("index")
     KHALTI_SECRET_KEY = os.getenv("KHALTI_SECRET_KEY")
     URL = "https://a.khalti.com/api/v2/epayment/initiate/"
     if request.method == "POST":
@@ -110,10 +164,11 @@ def payment_success(request):
                     amount=request.GET.get("total_amount"),
                 )
                 request.user.is_agent = True
-                context['success'] = True
+                request.user.save()
+                context["success"] = True
         except IntegrityError:
             pass
-        
+
     return render(request, "spacenest/payment_success.html", context)
 
 
@@ -121,36 +176,6 @@ def agents(request):
     agent_list = User.objects.filter(is_agent=True)
     context = {"agents": agent_list}
     return render(request, "spacenest/agents.html", context)
-
-
-@login_required(login_url="login")
-def add_property(request):
-    if request.method == "POST":
-        name = request.POST["name"]
-        location = request.POST["location"]
-        province = request.POST["province"]
-        listing_type = request.POST["listing_type"]
-        price = request.POST["price"]
-        image = request.FILES["image"]
-        description = request.POST["description"]
-        parking = request.POST["parking"]
-        bathroom = request.POST["bathroom"]
-        bedroom = request.POST["bedroom"]
-        Property.objects.create(
-            name=name,
-            location=location,
-            province=province,
-            listing_type=listing_type,
-            description=description,
-            price=price,
-            property_image=image,
-            parking=parking,
-            owner=request.user,
-            bathroom=bathroom,
-            bedroom=bedroom,
-        )
-        return redirect("property")
-    return render(request, "spacenest/add_property.html")
 
 
 def edit_profile(request):
