@@ -60,9 +60,7 @@ def property_list(request):
             filters &= Q(listing_type=listing_type)
         if province and province != "all":
             filters &= Q(province=province)
-
         properties = Property.objects.filter(filters)
-
     context = {"properties": properties}
     return render(request, "spacenest/properties.html", context)
 
@@ -70,7 +68,7 @@ def property_list(request):
 def property(request, pk):
     property = Property.objects.get(id=pk)
     context = {"property": property}
-    return render(request, "spacenest/property.html")
+    return render(request, "spacenest/property.html", context)
 
 
 @login_required(login_url="login")
@@ -186,23 +184,46 @@ def agents(request):
 
 def agent(request, pk):
     agent = User.objects.get(id=pk)
+    if request.method == "POST":
+        sender_id = request.POST["sender_id"]
+        sender = User.objects.get(id=sender_id)
+        title = request.POST["title"]
+        content = request.POST["content"]
+        Mailbox.objects.create(
+            receiver=agent, sender=sender, title=title, content=content
+        )
     properties = Property.objects.filter(owner=agent)
     context = {"agent": agent, "properties": properties}
     return render(request, "spacenest/agent.html", context)
 
 
 def edit_profile(request):
-    return render(request, "spacenest/edit_profile.html")
+    user = request.user
+    if request.method == "POST":
+        name = request.POST["name"]
+        email = request.POST["email"]
+        phone = request.POST["phone"]
+        if request.FILES:
+            image = request.FILES["image"]
+            user.profile_image = image
+        user.full_name = name
+        user.email = email
+        user.phone = phone
+        user.save()
+    context = {"user": user}
+    return render(request, "spacenest/edit_profile.html", context)
 
+def my_properties(request):
+    properties=Property.objects.filter(owner=request.user)
+    context = {'properties':properties}
+    return render(request, "spacenest/my_properties.html", context)
+
+def edit_property(request, pk):
+    property = Property.objects.get(id=pk)
+    context = {'property':property}
+    return render(request, "spacenest/edit_property.html", context)
 
 def favourites(request):
-    if request.method == "POST":
-        print("hello")
-        id = request.POST["id"]
-        property = Property.objects.get(id = id)
-        Favourite.objects.create(user=request.user, property=property)
-        print(id)
-        return redirect('index')
     return render(request, "spacenest/favourites.html")
 
 
