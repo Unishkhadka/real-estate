@@ -1,4 +1,3 @@
-from typing import Iterable
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 import shortuuid
@@ -142,3 +141,16 @@ class Mailbox(models.Model):
 
     def __str__(self):
         return f"Sent by {self.sender.full_name} to {self.receiver.full_name}"
+
+class Message(models.Model):
+    id = models.CharField(
+        _("ID"), primary_key=True, max_length=22, default=shortuuid.uuid, editable=False
+    )
+    name = models.CharField(_("Name"), max_length=120, null=True, blank=True)
+    email = models.CharField(_("Email"), max_length=120, null=True, blank=True)
+    phone = models.CharField(_("Phone"), max_length=120, null=True, blank=True)
+    message = models.TextField(_("Message"), max_length=120, null=True, blank=True)
+    date = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f"Sent by {self.name}"

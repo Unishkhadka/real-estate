@@ -122,10 +122,12 @@
             <div
                class="relative p-8 bg-white rounded-lg shadow-lg sm:p-12"
                >
-               <form>
+               <form action="" method="post">
+                  {% csrf_token %}
                   <div class="mb-6">
                      <input
                         type="text"
+                        name='name'
                         placeholder="Your Name"
                         class="border-stroke text-body-color focus:border-rose-600 w-full rounded border py-3 px-[14px] text-base outline-none"
                         />
@@ -133,6 +135,7 @@
                   <div class="mb-6">
                      <input
                         type="email"
+                        name="email"
                         placeholder="Your Email"
                         class="border-stroke dark:border-dark-3 text-body-color focus:border-rose-600 w-full rounded border py-3 px-[14px] text-base outline-none"
                         />
@@ -140,6 +143,7 @@
                   <div class="mb-6">
                      <input
                         type="text"
+                        name="phone"
                         placeholder="Your Phone"
                         class="border-stroke dark:border-dark-3 text-body-color focus:border-rose-600 w-full rounded border py-3 px-[14px] text-base outline-none"
                         />
@@ -147,6 +151,7 @@
                   <div class="mb-6">
                      <textarea
                         rows="6"
+                        name="message"
                         placeholder="Your Message"
                         class="border-stroke dark:border-dark-3 text-body-color focus:border-rose-600 w-full resize-none rounded border py-3 px-[14px] text-base outline-none"
                         ></textarea>

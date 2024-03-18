@@ -196,8 +196,28 @@ def edit_profile(request):
 
 
 def favourites(request):
+    if request.method == "POST":
+        print("hello")
+        id = request.POST["id"]
+        property = Property.objects.get(id = id)
+        Favourite.objects.create(user=request.user, property=property)
+        print(id)
+        return redirect('index')
     return render(request, "spacenest/favourites.html")
 
 
 def contact(request):
+    if request.method == "POST":
+        name = request.POST["name"]
+        email = request.POST["email"]
+        phone = request.POST["phone"]
+        message = request.POST["message"]
+        Message.objects.create(name=name, email=email, phone=phone, message=message)
+        return redirect("index")
     return render(request, "spacenest/contact.html")
+
+
+def inbox(request):
+    mails = Mailbox.objects.filter(receiver=request.user)
+    context = {"mails": mails}
+    return render(request, "spacenest/inbox.html", context)

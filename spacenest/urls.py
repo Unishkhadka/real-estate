@@ -13,4 +13,5 @@ urlpatterns = [
     path("add-property/", add_property, name="add-property"),
     path("edit-profile/", edit_profile, name="edit-profile"),
     path("favourites/", favourites, name="favourites"),
+    path("inbox/", inbox, name="inbox"),
 ]
