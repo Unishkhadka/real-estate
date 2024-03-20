@@ -13,43 +13,14 @@
             <span class="text-xl text-left">${{property.price}}</span>
             <span class="text-gray-600">online/cashpayment</span>
           </button>
-          <button class="bg-rose-600 text-lg text-white rounded-lg py-2 px-5">
+          <button  class="bg-rose-600 text-lg text-white rounded-lg py-2 px-5">
             Add to Favourite
           </button>
         </div>
         <div class="mt-5">
           <h1 class="text-2xl font-semibold">About Property</h1>
           <p class="mt-3 text-gray-600">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore
-            odit, debitis temporibus neque cumque aliquid? Quidem voluptates,
-            vero odio adipisci ad possimus, eligendi quos veniam, deleniti eos
-            ab pariatur id! Lorem ipsum dolor sit amet consectetur adipisicing
-            elit. Eius labore earum hic eaque error fugit assumenda a enim
-            cumque. Quam repellat excepturi similique nesciunt neque, optio
-            dolore nihil modi. Hic. Lorem ipsum dolor, sit amet consectetur
-            adipisicing elit. Quibusdam quos necessitatibus magnam numquam quo
-            facere, aliquam voluptates, a iure tempora earum possimus ullam
-            illum laborum iste vero consequatur debitis vitae. Lorem ipsum dolor
-            sit amet, consectetur adipisicing elit. Maxime, temporibus nam
-            impedit amet nobis tenetur eligendi officia facilis animi natus
-            voluptatibus accusantium itaque et consequatur asperiores,
-            dignissimos eius. Ad sequi explicabo modi porro quibusdam vel totam
-            blanditiis maiores veritatis eos. Nulla delectus quasi in dolores
-            officia! Repudiandae corrupti porro veritatis soluta ad neque
-            blanditiis, illum, dolor obcaecati, inventore maiores aliquam nobis.
-            Quia culpa reprehenderit quibusdam, iure minima nostrum sunt eos
-            aut, cum quas temporibus! Fuga eum quibusdam ullam atque tempora
-            dicta officia beatae aliquid quae autem, vero tenetur esse qui
-            praesentium expedita fugit molestias libero voluptatum laudantium
-            repellat, voluptate cupiditate quo laboriosam? Corporis animi ipsam
-            quasi aspernatur itaque alias soluta amet dolorum dicta iusto, ex
-            ipsum harum deserunt explicabo, architecto repellendus aperiam et.
-            Ducimus cupiditate corporis officia adipisci quam dignissimos
-            dolores deserunt? Dignissimos, maxime. Libero illum, laudantium quam
-            quos maxime modi deserunt distinctio fugiat magnam maiores at sed
-            enim, excepturi itaque dolores impedit iste non sit quae, eum
-            sapiente! Laudantium tempore provident soluta voluptatibus
-            assumenda!
+            {{property.description}}
           </p>
         </div>
       </div>
@@ -131,10 +102,6 @@
       <div class="py-4">
         <form class="space-y-4" action="" method="post">
           {% csrf_token %}
-          <input type="text" name="name" placeholder="Full Name"
-            class="px-4 py-2 border border-2 border-gray-300 rounded-lg leading-tight w-full" />
-          <input type="text" name="email" placeholder="Email Address"
-            class="px-4 py-2 border border-2 border-gray-300 rounded-lg leading-tight w-full" />
           <input type="text" name="phone" placeholder="Phone Number"
             class="px-4 py-2 border border-2 border-gray-300 rounded-lg leading-tight w-full" />
           <input type="date" name="date" placeholder="Date"

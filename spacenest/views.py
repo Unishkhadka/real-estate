@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.db.models import Q
-from .models import *
+from .models import *   
 from datetime import timedelta
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
@@ -70,16 +70,12 @@ def property(request, pk):
     if request.method == "POST":
         sender = request.user
         receiver = agent
-        name = request.POST["name"]
-        email = request.POST["email"]
         phone = request.POST["phone"]
         date = request.POST["date"]
         message = request.POST["message"]
         Mailbox.objects.create(
             sender=sender,
             receiver=receiver,
-            name=name,
-            email=email,
             phone=phone,
             date=date,
             message=message,
@@ -133,7 +129,7 @@ def add_property(request):
             bathroom=bathroom,
             bedroom=bedroom,
         )
-        return redirect("property")
+        return redirect("properties")
     return render(request, "spacenest/add_property.html")
 
 
@@ -293,3 +289,14 @@ def inbox(request):
     )
     context = {"mails": mails}
     return render(request, "spacenest/inbox.html", context)
+
+
+def inbox_single(request, pk):
+    if request.method == "POST":
+        id = request.POST["id"]
+        mail = Mailbox.objects.get(id=id)
+        mail.delete()
+        return redirect("inbox")
+    mail = Mailbox.objects.select_related("sender", "receiver").get(id=pk)
+    context = {"mail": mail}
+    return render(request, "spacenest/inbox_single.html", context)

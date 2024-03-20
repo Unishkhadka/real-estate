@@ -4,8 +4,6 @@ import shortuuid
 from datetime import timedelta
 from django.utils import timezone
 from users.models import CustomUser as User
-from django_ckeditor_5.fields import CKEditor5Field
-
 
 class Property(models.Model):
     PROVINCE_CHOICES = [
@@ -32,7 +30,7 @@ class Property(models.Model):
     listing_type = models.CharField(
         _("Listing Type"), max_length=20, choices=LISTING_TYPE_CHOICES
     )
-    description = CKEditor5Field("Text", config_name="extends")
+    description = models.TextField(null=True, blank=True)
     price = models.PositiveIntegerField(_("Price"))
     property_image = models.ImageField(
         _("Property Image"),
@@ -135,14 +133,14 @@ class Mailbox(models.Model):
     receiver = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="received_messages"
     )
-    name = models.CharField(_("Name"), max_length=120, null=True, blank=True)
-    email = models.CharField(_("Email"), max_length=120, null=True, blank=True)
     phone = models.CharField(_("Phone"), max_length=120, null=True, blank=True)
     message = models.TextField(_("Message"), max_length=120, null=True, blank=True)
     date = models.CharField(_("Date"), max_length=120, null=True, blank=True)
+    created_at = models.DateTimeField(_("Sent Date"), auto_now_add=True)
 
     class Meta:
         verbose_name_plural = "Mailbox"
+        ordering = ["-created_at"]
 
     def __str__(self):
         return f"Sent by {self.sender.full_name} to {self.receiver.full_name}"
