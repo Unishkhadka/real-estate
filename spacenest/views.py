@@ -14,16 +14,6 @@ load_dotenv()
 
 
 def index(request):
-    # properties = Property.objects.values_list(
-    #     "id",
-    #     "name",
-    #     "listing_type",
-    #     "price",
-    #     "property_image",
-    #     "parking",
-    #     "bathroom",
-    #     "bedroom"
-    # )[:3]
     properties = Property.objects.all()[:3]
     context = {"properties": properties}
     return render(request, "spacenest/index.html", context)
@@ -61,6 +51,12 @@ def property_list(request):
         if province and province != "all":
             filters &= Q(province=province)
         properties = Property.objects.filter(filters)
+
+    if request.method == "POST":
+        id = request.POST["id"]
+        property = Property.objects.get(id=id)
+        Favourite.objects.create(user=request.user, property=property)
+        return redirect("properties")
     context = {"properties": properties}
     return render(request, "spacenest/properties.html", context)
 
@@ -192,7 +188,7 @@ def agent(request, pk):
         Mailbox.objects.create(
             receiver=agent, sender=sender, title=title, content=content
         )
-    properties = Property.objects.filter(owner=agent)
+    properties = Property.objects.select_related("owner").filter(owner=agent)
     context = {"agent": agent, "properties": properties}
     return render(request, "spacenest/agent.html", context)
 
@@ -213,18 +209,50 @@ def edit_profile(request):
     context = {"user": user}
     return render(request, "spacenest/edit_profile.html", context)
 
+
 def my_properties(request):
-    properties=Property.objects.filter(owner=request.user)
-    context = {'properties':properties}
+    properties = Property.objects.select_related("owner").filter(owner=request.user)
+    context = {"properties": properties}
     return render(request, "spacenest/my_properties.html", context)
+
 
 def edit_property(request, pk):
     property = Property.objects.get(id=pk)
-    context = {'property':property}
+    if request.method == "POST":
+        name = request.POST["name"]
+        location = request.POST["location"]
+        province = request.POST["province"]
+        listing_type = request.POST["listing_type"]
+        price = request.POST["price"]
+        description = request.POST["description"]
+        parking = request.POST["parking"]
+        bathroom = request.POST["bathroom"]
+        bedroom = request.POST["bedroom"]
+        if request.FILES:
+            image = request.FILES["image"]
+            property.property_image = (image,)
+        property.name = name
+        property.location = location
+        property.province = province
+        property.listing_type = listing_type
+        property.description = description
+        property.price = price
+        property.parking = parking
+        property.owner = request.user
+        property.bathroom = bathroom
+        property.bedroom = bedroom
+        property.save()
+        return redirect("my_properties")
+    context = {"property": property}
     return render(request, "spacenest/edit_property.html", context)
 
+
 def favourites(request):
-    return render(request, "spacenest/favourites.html")
+    properties = Property.objects.select_related("owner").filter(
+        favourite__user=request.user
+    )
+    context = {"properties": properties}
+    return render(request, "spacenest/favourites.html", context)
 
 
 def contact(request):
@@ -239,6 +267,6 @@ def contact(request):
 
 
 def inbox(request):
-    mails = Mailbox.objects.filter(receiver=request.user)
+    mails = Mailbox.objects.select_related('sender', 'receiver').filter(receiver=request.user)
     context = {"mails": mails}
     return render(request, "spacenest/inbox.html", context)

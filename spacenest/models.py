@@ -116,8 +116,8 @@ class Favourite(models.Model):
     id = models.CharField(
         _("ID"), primary_key=True, max_length=22, default=shortuuid.uuid, editable=False
     )
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    property = models.ForeignKey(Property, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="favourite")
+    property = models.ForeignKey(Property, on_delete=models.CASCADE, related_name="favourite")
 
     def __str__(self):
         return f"Favourited {self.property.name} by {self.user.full_name}"
