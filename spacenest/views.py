@@ -63,7 +63,28 @@ def property_list(request):
 
 def property(request, pk):
     property = Property.objects.get(id=pk)
-    context = {"property": property}
+    agent = property.owner
+    properties = Property.objects.filter(
+        Q(owner=agent) | Q(location=property.location)
+    )[:3]
+    if request.method == "POST":
+        sender = request.user
+        receiver = agent
+        name = request.POST["name"]
+        email = request.POST["email"]
+        phone = request.POST["phone"]
+        date = request.POST["date"]
+        message = request.POST["message"]
+        Mailbox.objects.create(
+            sender=sender,
+            receiver=receiver,
+            name=name,
+            email=email,
+            phone=phone,
+            date=date,
+            message=message,
+        )
+    context = {"properties": properties, "property": property, "agent": agent}
     return render(request, "spacenest/property.html", context)
 
 
@@ -267,6 +288,8 @@ def contact(request):
 
 
 def inbox(request):
-    mails = Mailbox.objects.select_related('sender', 'receiver').filter(receiver=request.user)
+    mails = Mailbox.objects.select_related("sender", "receiver").filter(
+        receiver=request.user
+    )
     context = {"mails": mails}
     return render(request, "spacenest/inbox.html", context)

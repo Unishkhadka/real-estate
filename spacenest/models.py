@@ -117,7 +117,9 @@ class Favourite(models.Model):
         _("ID"), primary_key=True, max_length=22, default=shortuuid.uuid, editable=False
     )
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="favourite")
-    property = models.ForeignKey(Property, on_delete=models.CASCADE, related_name="favourite")
+    property = models.ForeignKey(
+        Property, on_delete=models.CASCADE, related_name="favourite"
+    )
 
     def __str__(self):
         return f"Favourited {self.property.name} by {self.user.full_name}"
@@ -133,14 +135,18 @@ class Mailbox(models.Model):
     receiver = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="received_messages"
     )
-    title = models.CharField(_("Title"), max_length=150, null=True, blank=True)
-    content = models.TextField(_("Content"), null=True, blank=True)
+    name = models.CharField(_("Name"), max_length=120, null=True, blank=True)
+    email = models.CharField(_("Email"), max_length=120, null=True, blank=True)
+    phone = models.CharField(_("Phone"), max_length=120, null=True, blank=True)
+    message = models.TextField(_("Message"), max_length=120, null=True, blank=True)
+    date = models.CharField(_("Date"), max_length=120, null=True, blank=True)
 
     class Meta:
         verbose_name_plural = "Mailbox"
 
     def __str__(self):
         return f"Sent by {self.sender.full_name} to {self.receiver.full_name}"
+
 
 class Message(models.Model):
     id = models.CharField(
