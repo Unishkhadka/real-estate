@@ -5,6 +5,7 @@ from datetime import timedelta
 from django.utils import timezone
 from users.models import CustomUser as User
 
+
 class Property(models.Model):
     PROVINCE_CHOICES = [
         ("koshi", _("Koshi Province")),
@@ -49,6 +50,19 @@ class Property(models.Model):
 
     def __str__(self) -> str:
         return self.name
+
+
+class Image(models.Model):
+    id = models.CharField(
+        _("ID"), primary_key=True, max_length=22, default=shortuuid.uuid, editable=False
+    )
+    image = models.ImageField(_("Image"), upload_to="property/")
+    property = models.ForeignKey(
+        Property, verbose_name=_("Property"), null=True, blank=True, related_name="images", on_delete=models.CASCADE
+    )
+    def __str__(self):
+        return (f" Image for {self.property.name}")
+
 
 
 class Membership(models.Model):

@@ -9,6 +9,7 @@ urlpatterns = [
     path("pricing/", pricing, name="pricing"),
     path("agents/", agents, name="agents"),
     path("edit-property/<str:pk>", edit_property, name="edit_property"),
+    path("add-images/<str:pk>", add_images, name="add_images"),
     path("agent/<str:pk>", agent, name="agent"),
     path("contact/", contact, name="contact"),
     path("payment-success/", payment_success, name="payment_success"),

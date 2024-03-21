@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.db.models import Q
-from .models import *   
+from .models import *
 from datetime import timedelta
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
@@ -51,18 +51,19 @@ def property_list(request):
         if province and province != "all":
             filters &= Q(province=province)
         properties = Property.objects.filter(filters)
-
-    if request.method == "POST":
-        id = request.POST["id"]
-        property = Property.objects.get(id=id)
-        Favourite.objects.create(user=request.user, property=property)
-        return redirect("properties")
     context = {"properties": properties}
     return render(request, "spacenest/properties.html", context)
 
 
 def property(request, pk):
     property = Property.objects.get(id=pk)
+    images = Image.objects.filter(property=property)
+    is_favourite = False
+    favourite = Favourite.objects.filter(property=property, user=request.user)
+    if favourite:
+        is_favourite = True
+    else:
+        is_favourite = False
     agent = property.owner
     properties = Property.objects.filter(
         Q(owner=agent) | Q(location=property.location)
@@ -70,17 +71,35 @@ def property(request, pk):
     if request.method == "POST":
         sender = request.user
         receiver = agent
-        phone = request.POST["phone"]
-        date = request.POST["date"]
-        message = request.POST["message"]
-        Mailbox.objects.create(
-            sender=sender,
-            receiver=receiver,
-            phone=phone,
-            date=date,
-            message=message,
-        )
-    context = {"properties": properties, "property": property, "agent": agent}
+        phone = request.POST.get("phone")
+        date = request.POST.get("date")
+        message = request.POST.get("message")
+        if sender and receiver and phone and date and message:
+            Mailbox.objects.create(
+                sender=sender,
+                receiver=receiver,
+                phone=phone,
+                date=date,
+                message=message,
+            )
+        id = request.POST.get("property_id")
+        if id:
+            if not is_favourite:
+                property = Property.objects.get(id=id)
+                Favourite.objects.create(user=request.user, property=property)
+                return redirect(f"/property/{id}")
+            else:
+                property = Property.objects.get(id=id)
+                favourite = Favourite.objects.get(user=request.user, property=property)
+                favourite.delete()
+                return redirect(f"/property/{id}")
+    context = {
+        "properties": properties,
+        "property": property,
+        "agent": agent,
+        "is_favourite": is_favourite,
+        "images": images,
+    }
     return render(request, "spacenest/property.html", context)
 
 
@@ -131,6 +150,17 @@ def add_property(request):
         )
         return redirect("properties")
     return render(request, "spacenest/add_property.html")
+
+
+def add_images(request, pk):
+    property = Property.objects.get(id=pk)
+    images = Image.objects.filter(property=property)
+    if request.method == "POST":
+        image = request.FILES["image"]
+        Image.objects.create(property=property, image=image)
+        return redirect(f"/add-images/{pk}")
+    context = {'images':images}
+    return render(request, "spacenest/add_images.html", context)
 
 
 @login_required(login_url="login")
