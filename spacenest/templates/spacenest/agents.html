@@ -3,27 +3,42 @@
 <section class="container mx-auto min-h-screen">
   <div class="flex flex-col items-center m-5 space-y-1">
     <h1 class="text-center text-3xl font-semibold">Our Agents</h1>
-    <p class="h-1 w-52 bg-rose-600"></span>
+    <p class="h-1 w-52 bg-indigo-600"></span>
   </div>
   <div class="grid grid-cols-4 py-10 gap-10">
     {% for agent in agents %}
-    <div class="bg-white rounded-md shadow-lg">
-      <div class="flex items-center justify-center">
-        <img src={{agent.profile_image.url}} alt="instructor" class="object-cover h-64 w-full rounded-t" />
+    <div
+      class="max-w-2xl mx-4 sm:max-w-sm md:max-w-sm lg:max-w-sm xl:max-w-sm sm:mx-auto md:mx-auto lg:mx-auto xl:mx-auto mt-16 bg-white shadow-xl rounded-lg text-gray-900">
+      <div class="rounded-t-lg h-32 overflow-hidden">
+        <img class="object-cover object-top w-full"
+          src='https://images.unsplash.com/photo-1549880338-65ddcdfd017b?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ'
+          alt='Mountain'>
       </div>
-      <div class="p-4">
+      <div class="flex justify-center -mt-16">
+        <img class="h-32 rounded-full w-32 object-cover" src={{agent.profile_image.url}} alt='profile'>
+      </div>
+      <div class="text-center mt-2">
+        <h2 class="font-semibold">{{agent.full_name}}</h2>
+      </div>
+      <div class="py-4 mt-2 text-gray-700 flex items-center justify-around">
+        <p class="flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" class="w-5 h-5">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+          </svg>
 
-        <p class="">{{agent.full_name}}</p>
-        <p class="text-gray-600 pb-2"> {{agent.property_set.count}} properties listed
+          <span>{{agent.property_set.count}} properties listed</span>
         </p>
-        <p class="flex justify-center">
-          <a href="{% url 'agent' agent.id%}"
-            class="border-2 rounded px-3 py-1.5 w-full text-center  border-rose-600 bg-rose-600 text-white hover:bg-white hover:text-black transition ease-in-out duration-300">
-            View Profile
-          </a>
+
       </div>
-      </p>
+      <div class="p-4 border-t mx-8 mt-2">
+        <a href="{% url 'agent' agent.id%}"
+          class="w-fit block mx-auto rounded-full bg-gray-900 hover:shadow-lg font-semibold text-white px-6 py-2">View
+          Profile</a>
+      </div>
     </div>
+
     {% endfor %}
   </div>
 </section>

@@ -6,218 +6,121 @@
   </div>
   <form action="" method="POST" class="my-10 px-32">
     {% csrf_token %}
-      <fieldset class="grid grid-cols-2 gap-4 my-10">
-        <legend class="sr-only">Delivery</legend>
+    <fieldset class="grid grid-cols-2 gap-4 my-10">
+      <legend class="sr-only">Delivery</legend>
 
-        <div>
-          <label
-            for="DeliveryStandard"
-            class="flex cursor-pointer justify-between gap-4 rounded-lg border border-gray-100 bg-white p-4 text-sm font-medium shadow-sm hover:border-gray-200 has-[:checked]:border-rose-500 has-[:checked]:ring-1 has-[:checked]:ring-rose-500"
-          >
-            <div>
-              <div class="space-y-2">
-                <p class="text-3xl font-bold text-gray-700">Standard</p>
-                <p>$ 20/month</p>
+      <div class="relative">
+        <label for="DeliveryStandard"
+          class="flex cursor-pointer justify-between gap-4 rounded-lg text-sm font-medium hover:border-gray-200 rounded-lg border-2 has-[:checked]:border-indigo-500 has-[:checked]:ring-1 has-[:checked]:ring-indigo-500">
+
+          <div class="w-full bg-white">
+            <div class="relative z-10 mb-10 overflow-hidden rounded-[10px]  bg-white dark:bg-dark-2 py-10 px-8">
+              <span class="mb-3 block text-lg font-semibold text-primary">
+                Standard
+              </span>
+              <h2 class="mb-5 text-[42px] font-bold text-dark dark:text-white">
+                <span>$20</span>
+
+              </h2>
+              <p class="mb-8 border-b border-stroke dark:border-dark-3 pb-8 text-base text-body-color dark:text-dark-6">
+                Perfect for starting out in real estate business.
+              </p>
+              <div class="mb-9 flex flex-col gap-[14px]">
+                <p class="text-base text-body-color dark:text-dark-6">
+                  20 property listings
+                </p>
+                <p class="text-base text-body-color dark:text-dark-6">
+                  Some Features unlocked.
+                </p>
+                <p class="text-base text-body-color dark:text-dark-6">
+                  Email Support
+                </p>
+                <p class="text-base text-body-color dark:text-dark-6">
+                  Help center access
+                </p>
+                <p class="text-base text-body-color dark:text-dark-6">
+                  No Phone Support
+                </p>
+
               </div>
-
-              <div class="my-5 mt-5 space-y-3 text-gray-900">
-                <div class="flex items-center space-x-2">
-                  <p>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      class="size-5 text-rose-700"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M4.5 12.75l6 6 9-13.5"
-                      />
-                    </svg>
-                  </p>
-                  <p>10 listings per month</p>
-                </div>
-                <div class="flex items-center space-x-2">
-                  <p>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      class="size-5 text-rose-700"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M4.5 12.75l6 6 9-13.5"
-                      />
-                    </svg>
-                  </p>
-                  <p>Email Support</p>
-                </div>
-                <div class="flex items-center space-x-2">
-                  <p>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      class="size-5 text-rose-700"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M4.5 12.75l6 6 9-13.5"
-                      />
-                    </svg>
-                  </p>
-                  <p>Help Center Access</p>
-                </div>
+              <div>
+                <span class="absolute right-0 top-7 z-[-1]">
+                  <svg width="77" height="172" viewBox="0 0 77 172" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="86" cy="86" r="86" fill="url(#paint0_linear)" />
+                    <defs>
+                      <linearGradient id="paint0_linear" x1="86" y1="0" x2="86" y2="172" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#3056D3" stop-opacity="0.09" />
+                        <stop offset="1" stop-color="#C4C4C4" stop-opacity="0" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                </span>
               </div>
             </div>
+          </div>
 
-            <input
-              type="radio"
-              name="plan"
-              value="standard"
-              id="DeliveryStandard"
-              class="size-5 border-gray-300 text-rose-500 accent-rose-600"
-              checked
-            />
-          </label>
-        </div>
+          <input type="radio" name="plan" value="standard" id="DeliveryStandard"
+            class="absolute top-3 right-3 z-30 size-5 border-gray-300 text-indigo-500 accent-indigo-600" checked />
+        </label>
+      </div>
 
-        <div>
-          <label
-            for="DeliveryPriority"
-            class="flex cursor-pointer justify-between gap-4 rounded-lg border border-gray-100 bg-white p-4 text-sm font-medium shadow-sm hover:border-gray-200 has-[:checked]:border-rose-500 has-[:checked]:ring-1 has-[:checked]:ring-rose-500"
-          >
-            <div>
-              <div class="space-y-2">
-                <p class="text-3xl font-bold text-gray-700">Pro</p>
-                <p>$ 30/month</p>
+      <div class="relative">
+        <label for="DeliveryPriority"
+          class="flex cursor-pointer justify-between gap-4 rounded-lg text-sm font-medium hover:border-gray-200 rounded-lg border-2 has-[:checked]:border-indigo-500 has-[:checked]:ring-1 has-[:checked]:ring-indigo-500">
+
+          <div class="w-full bg-white">
+            <div class="relative z-10 mb-10 overflow-hidden rounded-[10px] bg-white dark:bg-dark-2 py-10 px-8">
+              <span class="mb-3 block text-lg font-semibold text-primary">
+                Professional
+              </span>
+              <h2 class="mb-5 text-[42px] font-bold text-dark dark:text-white">
+                <span>$30</span>
+
+              </h2>
+              <p class="mb-8 border-b border-stroke dark:border-dark-3 pb-8 text-base text-body-color dark:text-dark-6">
+                Perfect for cases when you have a lot to list.
+              </p>
+              <div class="mb-9 flex flex-col gap-[14px]">
+                <p class="text-base text-body-color dark:text-dark-6">
+                  30 Property Listings
+                </p>
+                <p class="text-base text-body-color dark:text-dark-6">
+                  All Features unlocked.
+                </p>
+                <p class="text-base text-body-color dark:text-dark-6">
+                  Email Support
+                </p>
+                <p class="text-base text-body-color dark:text-dark-6">
+                  Phone Support
+                </p>
+                <p class="text-base text-body-color dark:text-dark-6">
+                  Community Access
+                </p>
               </div>
-
-              <div class="my-5 mt-5 space-y-3 text-gray-900">
-                <div class="flex items-center space-x-2">
-                  <p>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      class="size-5 text-rose-700"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M4.5 12.75l6 6 9-13.5"
-                      />
-                    </svg>
-                  </p>
-                  <p>20 listings per month</p>
-                </div>
-                <div class="flex items-center space-x-2">
-                  <p>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      class="size-5 text-rose-700"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M4.5 12.75l6 6 9-13.5"
-                      />
-                    </svg>
-                  </p>
-                  <p>Email Support</p>
-                </div>
-                <div class="flex items-center space-x-2">
-                  <p>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      class="size-5 text-rose-700"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M4.5 12.75l6 6 9-13.5"
-                      />
-                    </svg>
-                  </p>
-                  <p>Help Center Access</p>
-                </div>
-                <div class="flex items-center space-x-2">
-                  <p>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      class="size-5 text-rose-700"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M4.5 12.75l6 6 9-13.5"
-                      />
-                    </svg>
-                  </p>
-                  <p>Phone Support</p>
-                </div>
-                <div class="flex items-center space-x-2">
-                  <p>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      class="size-5 text-rose-700"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M4.5 12.75l6 6 9-13.5"
-                      />
-                    </svg>
-                  </p>
-                  <p>Community Access</p>
-                </div>
+              <div>
+                <span class="absolute right-0 top-7 z-[-1]">
+                  <svg width="77" height="172" viewBox="0 0 77 172" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="86" cy="86" r="86" fill="url(#paint0_linear)" />
+                    <defs>
+                      <linearGradient id="paint0_linear" x1="86" y1="0" x2="86" y2="172" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#3056D3" stop-opacity="0.09" />
+                        <stop offset="1" stop-color="#C4C4C4" stop-opacity="0" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                </span>
               </div>
             </div>
-
-            <input
-              type="radio"
-              name="plan"
-              value="pro"
-              id="DeliveryPriority"
-              class="size-5 border-gray-300 text-rose-500 accent-rose-600"
-            />
-          </label>
-        </div>
-      </fieldset>
+          </div>
+          <input type="radio" name="plan" value="pro" id="DeliveryPriority"
+            class="absolute top-3 right-3 z-30 size-5 border-gray-300 text-indigo-500 accent-indigo-600" />
+        </label>
+      </div>
+    </fieldset>
     <div class='flex justify-end'>
-      <button
-        type="submit"
-        class="bg-rose-600 text-white px-4 py-2 rounded-md shadow-sm hover:bg-rose-700 focus:outline-none focus:bg-rose-700"
-      >
-        Choose Plan
+      <button type="submit"
+        class="bg-indigo-600 text-white px-4 py-2 rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:bg-indigo-700">
+        Pay via Khalti
       </button>
     </div>
   </form>

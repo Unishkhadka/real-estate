@@ -23,13 +23,21 @@
 
                         <select name="province" id="HeadlineAct"
                             class="p-3 w-full mt-2 rounded-lg border-gray-300 text-gray-700 sm:text-sm">
-                            <option {% if property.province == 'koshi' %} selected {% endif %} value="koshi">Koshi Province</option>
-                            <option {% if property.province == 'madhesh' %} selected {% endif %} value="madhesh">Madhesh Province</option>
-                            <option {% if property.province == 'bagmati' %} selected {% endif %} value="bagmati">Bagmati Province</option>
-                            <option {% if property.province == 'gandaki' %} selected {% endif %} value="gandaki">Gandaki Province</option>
-                            <option {% if property.province == 'lumbini' %} selected {% endif %} value="lumbini">Lumbini Province</option>
-                            <option {% if property.province == 'karnali' %} selected {% endif %} value="karnali">Karnali Province</option>
-                            <option {% if property.province == 'sudurpaschim' %}selected {% endif %}  value="sudurpaschim">Sudurpaschim Province</option>
+                            <option {% if property.province == 'koshi' %} selected {% endif %} value="koshi">Koshi
+                                Province</option>
+                            <option {% if property.province == 'madhesh' %} selected {% endif %} value="madhesh">Madhesh
+                                Province</option>
+                            <option {% if property.province == 'bagmati' %} selected {% endif %} value="bagmati">Bagmati
+                                Province</option>
+                            <option {% if property.province == 'gandaki' %} selected {% endif %} value="gandaki">Gandaki
+                                Province</option>
+                            <option {% if property.province == 'lumbini' %} selected {% endif %} value="lumbini">Lumbini
+                                Province</option>
+                            <option {% if property.province == 'karnali' %} selected {% endif %} value="karnali">Karnali
+                                Province</option>
+                            <option {% if property.province == 'sudurpaschim' %}selected {% endif %}
+                                value="sudurpaschim">
+                                Sudurpaschim Province</option>
                         </select>
                     </div>
 
@@ -38,8 +46,10 @@
 
                         <select name="listing_type" id="HeadlineAct"
                             class="p-3 w-full mt-2 rounded-lg border-gray-300 text-gray-700 sm:text-sm">
-                            <option {% if property.listing_type == 'sell' %}selected{% endif %} value="sell">Sell</option>
-                            <option {% if property.listing_type == 'rent' %}selected{% endif %} value="rent">Rent</option>
+                            <option {% if property.listing_type == 'sell' %}selected{% endif %} value="sell">Sell
+                            </option>
+                            <option {% if property.listing_type == 'rent' %}selected{% endif %} value="rent">Rent
+                            </option>
                         </select>
                     </div>
                 </div>
@@ -53,7 +63,7 @@
                     <div>
                         <label class="text-gray-600" for="name">Parking</label>
                         <input class="w-full rounded-lg mt-2 border border-gray-300 p-3 text-sm" min="0"
-                        value="{{property.parking}}" type="number" id="name" name="parking" />
+                            value="{{property.parking}}" type="number" id="name" name="parking" />
                     </div>
                 </div>
                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -61,29 +71,27 @@
                         <label class="text-gray-600" for="name">Bathroom</label>
                         <input class="w-full rounded-lg mt-2 border border-gray-300 p-3 text-sm" min="0"
                             value="{{property.bathroom}}" type="number" id="name" name="bathroom" />
-                        </div>
+                    </div>
                     <div>
                         <label class="text-gray-600" for="name">Bedroom</label>
                         <input class="w-full rounded-lg mt-2 border border-gray-300 p-3 text-sm" min="0"
-                        value="{{property.bedroom}}" type="number" id="name" name="bedroom" />
+                            value="{{property.bedroom}}" type="number" id="name" name="bedroom" />
                     </div>
                 </div>
 
                 <div>
                     <label class="text-gray-600" for="phone">Property Image</label>
                     <div id="imagePreviewContainer">
-                      <img id="imagePreview" class="preview-image w-full h-[500px] py-2 object-cover" src="{{property.property_image.url}}" alt="{{property.name}}">
+                        <img id="imagePreview" class="preview-image w-full h-[500px] py-2 object-cover"
+                            src="{{property.property_image.url}}" alt="{{property.name}}">
                     </div>
-                  <input
-                    class="w-full rounded-lg mt-2 border border-gray-300 p-3 text-sm"
-                    type="file"
-                    name="image"
-                    id="image"
-                    onchange="previewImage(event)"
-                  />
+                    <input class="w-full rounded-lg mt-2 border border-gray-300 p-3 text-sm" type="file" name="image"
+                        id="image" onchange="previewImage(event)" />
                 </div>
                 <div>
-                    <a href="{% url 'add_images' property.id%}" class="px-3 py-2 border border-gray-500 rounded-lg text-gray-600 mt-10 hover:bg-gray-500 hover:text-white transition duration-300">Click to Add more
+                    <a href="{% url 'add_images' property.id%}"
+                        class="px-3 py-2 border border-gray-500 rounded-lg text-gray-600 mt-10 hover:bg-gray-500 hover:text-white transition duration-300">Click
+                        to Add more
                         images</a>
                 </div>
                 <div>
@@ -92,13 +100,13 @@
                     <textarea id="editor" name="description"
                         class="w-full rounded-lg border border-gray-300 mt-2 p-3 h-80 text-sm"
                         placeholder="Write a short description" rows="6" id="description">
-            {{property.description}}
-        </textarea>
+                    {{property.description}}
+                    </textarea>
                 </div>
 
                 <div class="mt-4">
                     <button type="submit"
-                        class="inline-block w-full rounded-lg bg-rose-600 px-5 py-3 font-medium text-white sm:w-auto">
+                        class="inline-block w-full rounded-lg bg-indigo-600 px-5 py-3 font-medium text-white sm:w-auto">
                         Publish
                     </button>
                 </div>
@@ -107,16 +115,16 @@
     </div>
 </section>
 <script>
-    function previewImage(event) {
-      const input = event.target;
-      if (input.files && input.files[0]) {
+function previewImage(event) {
+    const input = event.target;
+    if (input.files && input.files[0]) {
         const reader = new FileReader();
         reader.onload = function(e) {
-          const imagePreview = document.getElementById('imagePreview');
-          imagePreview.src = e.target.result;
+            const imagePreview = document.getElementById('imagePreview');
+            imagePreview.src = e.target.result;
         }
         reader.readAsDataURL(input.files[0]);
-      }
     }
-  </script>
+}
+</script>
 {% endblock content %}
