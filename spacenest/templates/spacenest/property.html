@@ -82,6 +82,7 @@
 
         </p>
         <form method="post" class="w-full space-y-3 mt-2">
+          {% csrf_token %}
           <input type="date" name="date" id="" class="border p-3 rounded w-full block">
           <input type="number" name="phone" id="" class="border p-3 rounded w-full block" placeholder="Phone Number">
           <textarea name="message" id="" cols="30" rows="10" class="border p-3 rounded w-full block resize-none"
